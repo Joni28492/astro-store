@@ -41,6 +41,14 @@ export const getProductsByPage =  defineAction({
         const {rows} = await db.run(productsQuery)
         // console.log(rows);
 
+        const products = rows.map( product => {
+
+            return {
+                ...product,
+                images: product.images ? product.images : 'no-image.png' 
+            }
+        } )
+
         // const products = await db
         //     .select()
         //     .from(Product)
@@ -49,12 +57,8 @@ export const getProductsByPage =  defineAction({
         //     .offset((page-1)*12)
 
 
-
-
-
-
         return {
-            products: rows as unknown as ProductWithImages [],
+            products: products as unknown as ProductWithImages [], //rows as unknown as ProductWithImages [],
             totalPages: totalPages,
         } ;
     }
